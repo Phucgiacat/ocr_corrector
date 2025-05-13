@@ -81,19 +81,5 @@ It is recommended to run the code as below.
 python ocr_corrector.py --corrector false
 ```
 ***Note: Going through each step carefully will lead to better results.***
-### Using your OWN data
-Put the dictionaries in the `resource` folder and update their path in `sample.env` file.
 
-You can use either a UI web interface (see [here](https://github.com/davidle2810/nom_ocr_corrector_ui)) or with command line.
-#### With UI web interface
-Start the UI interface first.
-In your terminal, type
-```
-python main.py
-```
-#### With command line
-In your terminal, type
-```
-python main_with_cmd.py --input path/to/your/data.pdf --file_id file_id
-```
 
