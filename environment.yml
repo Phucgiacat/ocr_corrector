@@ -1,0 +1,29 @@
+name: ocr_corrector
+channels:
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.8
+  - pip
+  - cython
+  - jupyter
+  - fairseq
+  - numpy
+  - pandas
+  - opencv
+  - pytorch
+  - torchvision
+  - matplotlib
+  - lxml
+  - pyyaml
+  - pip:
+      - ultralytics
+      - pdfplumber
+      - pdf2image
+      - flask
+      - langdetect
+      - laserembeddings
+      - sentencepiece
+      - transliterate
+      - python-dotenv
