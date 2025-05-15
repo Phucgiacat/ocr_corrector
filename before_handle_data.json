@@ -1,5 +1,9 @@
 {
     "file_name": "SachTruyenCacThanh",
-    "vi_dir": "D:\\learning\\lab NLP\\Output/image/Quoc Ngu",
-    "nom_dir": "D:\\learning\\lab NLP\\Output/image/Han Nom"
+    "vi_dir": "D:\\learning\\lab NLP\\Output/image_processed/Quoc Ngu",
+    "nom_dir": "D:\\learning\\lab NLP\\Output/image_processed/Han Nom",
+    "ocr_txt_qn": "D:\\learning\\lab NLP\\Output/ocr/Quoc Ngu ocr",
+    "ocr_json_nom": "D:\\learning\\lab NLP\\Output/ocr/Han Nom ocr",
+    "ocr_image_nom": "D:\\learning\\lab NLP\\Output/ocr/image_bbox",
+    "output_txt": "D:\\learning\\lab NLP\\Output\\result.txt"
 }

@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="hcmus-logo.png" alt="Logo" width="200"/>
+</p>
+
 # nom_ocr_corrector
 
 nom_ocr_corrector is a multimodal sentence alignment tool for Sino-Nôm (NS) - Vietnamese (QN) parallel corpora. It uses [LASER](https://github.com/facebookresearch/LASER) embeddings and VecAlign to find sentence pairs that are similar in meaning 
