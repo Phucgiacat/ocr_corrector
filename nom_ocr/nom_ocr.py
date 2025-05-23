@@ -2,7 +2,6 @@ from .logger import Logger
 import os
 import json
 from .ocr_client import OCR, UploadImageReq, OCRReq
-from fake_useragent import UserAgent
 import time
 from tqdm import tqdm
 from dotenv import load_dotenv
@@ -16,8 +15,7 @@ def  nom_ocr(nom_dir, output_json_dir, output_image_dir, start=0):
         if count < start:
             continue
         time.sleep(1)
-        ua = UserAgent()
-        agent = ua.random
+        agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)...'
         ocr_client = OCR()
         os.makedirs(output_image_dir,exist_ok=True)
         os.makedirs(output_json_dir, exist_ok=True)

@@ -41,9 +41,8 @@ class EdgeDetection:
         
         largest_box = None
 
-
         results = self.module(image_path, save=_save_,verbose=False)
-        
+
         for result in results:
             for box in result.boxes:
                 x1, y1, x2, y2 = map(int, box.xyxy[0])
@@ -57,10 +56,10 @@ class EdgeDetection:
             cropped_image = image[y1:y2, x1:x2]
             return cropped_image
         else:
-            return None  # Không có box nào được phát hiệ
+            return  image# Không có box nào được phát hiện
 
-if __name__ == "__main__":
-    input_dir = r"D:\learning\lab NLP\Tool_news\AutoLabel_script\data"
-    output_dir = r"D:\learning\lab NLP\Tool_news\AutoLabel_script\test"
-    edge_detection = EdgeDetection(input_dir, output_dir,path_module=r"D:\learning\lab NLP\Tool_news\AutoLabel_script\model\vi\best.pt")
-    edge_detection.process()
+# if __name__ == "__main__":
+#     input_dir = r"D:\learning\lab NLP\Tool_news\AutoLabel_script\data"
+#     output_dir = r"D:\learning\lab NLP\Tool_news\AutoLabel_script\test"
+#     edge_detection = EdgeDetection(input_dir, output_dir,path_module=r"D:\learning\lab NLP\Tool_news\AutoLabel_script\model\vi\best.pt")
+#     edge_detection.process()
