@@ -35,7 +35,8 @@ if __name__ == "__main__":
         if ocr_vi_nom[0]: # <--- ocr quốc ngữ
             info['ocr_txt_qn'] = f"{os.environ['OUTPUT_FOLDER']}/ocr/Quoc Ngu ocr"
             vi_ocr(info['vi_dir'], info['ocr_txt_qn'])
-        
+        write_file_info(info) 
+
         if ocr_vi_nom[1]: # <--- ocr hán nôm
             info['ocr_json_nom'] = f"{os.environ['OUTPUT_FOLDER']}/ocr/Han Nom ocr"
             info['ocr_image_nom'] = f"{os.environ['OUTPUT_FOLDER']}/ocr/image_bbox"
