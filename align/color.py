@@ -5,10 +5,28 @@ import os
 from tqdm import tqdm # type: ignore
 from .tokenizer import LoadModel
 import re
+import Levenshtein
 
 quocngu_dict = pd.read_excel(r'dict\QuocNgu_SinoNom_Dic.xlsx')
 similar_dict = pd.read_excel(r'dict\SinoNom_Similar_Dic_v2.xlsx')
 model = LoadModel()
+
+
+import Levenshtein
+
+def char_to_unicode_hex(ch):
+    return format(ord(ch), '04x')  # lấy mã hex, độ dài 4 chữ số
+
+def similarity_by_unicode_hex(ch1, ch2):
+    hex1 = char_to_unicode_hex(ch1)
+    hex2 = char_to_unicode_hex(ch2)
+    return Levenshtein.ratio(hex1, hex2)
+
+def sort_by_unicode_similarity(target, candidates):
+    scored = [(c, similarity_by_unicode_hex(target, c)) for c in candidates]
+    scored.sort(key=lambda x: x[1], reverse=True)
+    scored = [char for char, _ in scored]  # giữ lại chỉ ký tự
+    return scored  # giữ lại cả điểm để debug
 
 def convert_txt_to_ecel(file_path: str, output_path: str , debug=False,namebook='book'):
     with open(file_path, "r", encoding="utf-8") as file:
@@ -67,7 +85,6 @@ def compare(quoc_ngu: str, ocr: str):
     ocr = ocr.strip()
     result_word = list(quocngu_dict[quocngu_dict['QuocNgu'] == quoc_ngu]['SinoNom'])
     result_OCR = list(similar_dict[similar_dict['Input Character'] == ocr]['Top 20 Similar Characters'])
-
     if len(result_OCR) == 1:
         result_OCR = [ocr] + list(result_OCR[0])
     else:
@@ -75,7 +92,7 @@ def compare(quoc_ngu: str, ocr: str):
     if ocr in  result_word:
         return [ocr]
     temp = list(set(result_word) & set(result_OCR))
-    return temp
+    return sort_by_unicode_similarity(ocr, temp) if len(temp) > 0 else temp
 
 def marking(df: pd.DataFrame, output_path: str , debug=False, type_qn = 2):
     """
@@ -129,10 +146,10 @@ def marking(df: pd.DataFrame, output_path: str , debug=False, type_qn = 2):
             _tem_1 += [color, a[i] + " "]
 
         for i in range(max_len):
-            # print(a[i], b[i], compare(a[i], b[i]), sep='\n', end='\n\n')
-
-            if len(compare(a[i], b[i])) >1:
-                temp+=(blue, b[i])
+            # print(a[i], b[i], compare(a[i], b[i]))
+            result = compare(a[i], b[i])
+            if len(result) >1:
+                temp+=(blue, result[0])
                 _tem_2 += (blue, a[i]+ " ")
 
             elif a[i] == '*' and b[i] != '*':
@@ -143,10 +160,10 @@ def marking(df: pd.DataFrame, output_path: str , debug=False, type_qn = 2):
                 temp+=(red, b[i])
                 _tem_2+=(red, a[i]+" ")
 
-            elif len(compare(a[i], b[i])) == 1:
+            elif len(result) == 1:
                 temp+=(black, b[i])
                 _tem_2 += (black, a[i] + " ")
-            elif len(compare(a[i], b[i])) == 0:
+            elif len(result) == 0:
                 temp+=(red, b[i])
                 _tem_2+=(red, a[i]+" ")
         if debug:

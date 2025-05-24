@@ -12,6 +12,8 @@ def resize_image(image_path, max_size=1200, output_file=None):
             new_width = int(width * scale_factor)
             new_height = int(height * scale_factor)
             img = img.resize((new_width, new_height), Image.LANCZOS)
+            if img.mode == 'RGBA':
+                img = img.convert('RGB')  # Chuyển từ RGBA sang RGB
             img.save(image_path)
             # print(f"Resized image '{image_path}' to {new_width}x{new_height}")
 
