@@ -1,4 +1,5 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from typing import List
 from typing import Optional
 
 @dataclass
@@ -43,14 +44,14 @@ class DownloadImageRes:
 
 @dataclass
 class OCRReq:
-    ocr_id: 1
+    ocr_id: 4
     file_name: str
 
 @dataclass
 class OCRData:
     result_file_name : str
-    result_ocr_text: list
-    result_bbox: list
+    result_ocr_text: List  = field(default_factory=list)
+    result_bbox: List      = field(default_factory=list)  # ✅ Thêm default
 
 @dataclass
 class OCRRes:

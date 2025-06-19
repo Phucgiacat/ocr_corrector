@@ -41,7 +41,7 @@ class EdgeDetection:
         
         largest_box = None
 
-        results = self.module(image_path, save=_save_,verbose=False)
+        results = self.module(image_path, save=_save_,verbose=True)
 
         for result in results:
             for box in result.boxes:
