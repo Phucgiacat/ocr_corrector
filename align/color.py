@@ -337,7 +337,14 @@ def compare(quoc_ngu: str, ocr: str):
     temp = list(set(result_word) & set(result_OCR))
     return sort_by_unicode_similarity(ocr, temp) if len(temp) > 0 else temp
 
-def marking(df: pd.DataFrame, output_path: str , debug=False, type_qn = 2):
+def safe_write_rich_string(ws, row, col, fragments):
+    if len(fragments) < 3:
+        text = ''.join([t if isinstance(t, str) else '' for t in fragments])
+        ws.write(row, col, text)
+    else:
+        ws.write_rich_string(row, col, *fragments)
+
+def marking(df: pd.DataFrame, output_path: str, debug=False, type_qn=2):
     """
     column_qn = {0, 1, 2} nghĩa tương ứng: 
         0: không tô màu.
@@ -346,90 +353,118 @@ def marking(df: pd.DataFrame, output_path: str , debug=False, type_qn = 2):
     """
 
     list_quocngu = df['Chữ Quốc ngữ'].tolist()
-    list_ocr = list(df['SinoNom OCR'])
+    list_ocr = df['SinoNom OCR'].tolist()
 
     workbook = Workbook(output_path)
     worksheet = workbook.add_worksheet()
 
-    red = workbook.add_format({'font_color': 'red'})   
+    red = workbook.add_format({'font_color': 'red'})
     blue = workbook.add_format({'font_color': 'blue'})
     black = workbook.add_format({'font_color': 'black'})
     header = workbook.add_format({'bold': True, 'align': 'center'})
 
     column_widths = {
-        'A': 18, 
-        'B': 18,  
+        'A': 18,
+        'B': 18,
         'C': 50,
         'D': 90,
-        'E': 90
+        'E': 90,
+        'F': 90
     }
 
     for col_letter, width in column_widths.items():
         worksheet.set_column(f'{col_letter}:{col_letter}', width)
 
     if debug:
-        worksheet.write(0, 0, *['Image_name_path', header])
-    worksheet.write(0, 0, *['Image_name', header])          
-    worksheet.write(0, 1, *['ID', header])            
-    worksheet.write(0, 2, *['Image Box', header])  
-    worksheet.write(0, 3, *['SinoNom OCR', header])
-    worksheet.write(0, 4, *['Chữ Quốc ngữ', header])
+        worksheet.write(0, 0, 'Image_name_path', header)
+    else:
+        worksheet.write(0, 0, 'Image_name', header)
+
+    worksheet.write(0, 1, 'ID', header)
+    worksheet.write(0, 2, 'Image Box', header)
+    worksheet.write(0, 3, 'SinoNom OCR', header)
+    worksheet.write(0, 4, 'SinoNom char', header)
+    worksheet.write(0, 5, 'Chữ Quốc ngữ', header)
+
     sum_char = 0
     sum_char_red = 0
+    sum_char_blue = 0
+
     print("Đang đánh dấu các từ trong file excel...")
-    for row_num, (word, ocr) in enumerate(tqdm(zip(list_quocngu, list_ocr), desc="Marking: ", unit="row")): #enumerate(tqdm(zip(list_quocngu, list_ocr)):
+    for row_num, (word, ocr) in enumerate(tqdm(zip(list_quocngu, list_ocr), desc="Marking: ", unit="row")):
         word = normalize_vietnamese_text(word)
         a = word.split()
         b = list(ocr)
-        
+
+        if len(a) != len(b):
+            print(f"[⚠️ Warning] Dữ liệu không khớp tại dòng {row_num + 1}: {a} vs {b}")
+            continue
+
         max_len = len(b)
-        sum_char += len(b)
-        temp = []
-        _tem_1 = []
-        _tem_2 = []
+        sum_char += max_len
+
+        temp = []     # nội dung cột 'SinoNom OCR'
+        _tem_1 = []   # type_qn == 1, tô syllable đúng
+        _tem_2 = []   # type_qn == 2, tô chữ Quốc ngữ
+        _tem_3 = []   # cột mới: SinoNom char tô theo Hán Nôm
+
         for i in range(len(a)):
             color = black if model.is_syllable(a[i]) else red
             _tem_1 += [color, a[i] + " "]
 
         for i in range(max_len):
-            # print(a[i], b[i], compare(a[i], b[i]))
             result = compare(a[i], b[i])
-            if len(result) >1:
-                temp+=(blue, result[0])
-                _tem_2 += (blue, a[i]+ " ")
+
+            if len(result) > 1:
+                sum_char_blue += 1
+                temp += [blue, result[0]]
+                _tem_2 += [blue, a[i] + " "]
+                _tem_3 += [red, b[i]]
 
             elif a[i] == '*' and b[i] != '*':
                 sum_char_red += 1
-                temp+=(red, b[i])
-                _tem_2 += (red, a[i]+" ")
+                temp += [red, b[i]]
+                _tem_2 += [red, a[i] + " "]
+                _tem_3 += [red, b[i]]
 
             elif b[i] == '*' and a[i] != '*':
                 sum_char_red += 1
-                temp+=(red, b[i])
-                _tem_2+=(red, a[i]+" ")
+                temp += [red, b[i]]
+                _tem_2 += [red, a[i] + " "]
+                _tem_3 += [red, b[i]]
 
             elif len(result) == 1:
-                temp+=(black, b[i])
-                _tem_2 += (black, a[i] + " ")
+                temp += [black, b[i]]
+                _tem_2 += [black, a[i] + " "]
+                _tem_3 += [black, b[i]]
+
             elif len(result) == 0:
                 sum_char_red += 1
-                temp+=(red, b[i])
-                _tem_2+=(red, a[i]+" ")
+                temp += [red, b[i]]
+                _tem_2 += [red, a[i] + " "]
+                _tem_3 += [red, b[i]]
+
+        # Write to Excel
         if debug:
             worksheet.write(row_num + 1, 0, df['Image_name_path'].iloc[row_num])
-        worksheet.write(row_num + 1, 0, df['Image_name'].iloc[row_num])
+        else:
+            worksheet.write(row_num + 1, 0, df['Image_name'].iloc[row_num])
+
         worksheet.write(row_num + 1, 1, df['ID'].iloc[row_num])
         worksheet.write(row_num + 1, 2, df['Image Box'].iloc[row_num])
-        worksheet.write_rich_string(row_num + 1, 3, *temp)
-        if type_qn == 0:
-            worksheet.write(row_num + 1, 4, df['Chữ Quốc ngữ'].iloc[row_num])
-        elif type_qn == 1:
-            worksheet.write_rich_string(row_num + 1, 4, *_tem_1)
-        elif type_qn == 2:
-            worksheet.write_rich_string(row_num + 1, 4, *_tem_2)
-    print(f"Số Đỏ: {sum_char_red}/{sum_char} chữ => lỗi: {(sum_char_red/sum_char)*100}%")
-    workbook.close()
+        safe_write_rich_string(worksheet, row_num + 1, 3, temp)
+        safe_write_rich_string(worksheet, row_num + 1, 4, _tem_3)
 
+        if type_qn == 0:
+            worksheet.write(row_num + 1, 5, df['Chữ Quốc ngữ'].iloc[row_num])
+        elif type_qn == 1:
+            safe_write_rich_string(worksheet, row_num + 1, 5, _tem_1)
+        elif type_qn == 2:
+            safe_write_rich_string(worksheet, row_num + 1, 5, _tem_2)
+
+    print(f"Số Đỏ: {sum_char_red}/{sum_char} chữ => lỗi: {(sum_char_red/sum_char)*100:.2f}%")
+    print(f"Số Xanh: {sum_char_blue}/{sum_char} chữ => lỗi {(sum_char_blue/sum_char)*100:.2f}%")
+    workbook.close()
 
 # if __name__ == "__main__":
 #     txt_path = 'data/result.txt'
