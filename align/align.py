@@ -122,6 +122,8 @@ def align(nom_dir, vi_dir, output_txt, k=2, name_book="book"):
                 segments.append((hn_remain, qn_remain))
 
         with open(output_txt, "a", encoding="utf-8") as f:
+            if len(nom_data['bbox']) != len(segments):
+                raise ValueError("Lỗi nặng")
             for bbox, (han_seg, qn_seg) in zip(nom_data['bbox'], segments):
                 if len(han_seg) != len(qn_seg):
                     print(f"⚠️ Warning: Mismatch độ dài align tại file {file_name}. Hán={len(han_seg)}, Việt={len(qn_seg)}")

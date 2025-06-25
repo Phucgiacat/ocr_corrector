@@ -14,27 +14,40 @@ def print_box(data):
         conf = box[1][1]
         print(f"{text} - {conf} - {point}")
 
-def remove_edge_box(bbox):
-    bbox = sorted(bbox, key=lambda x: x["points"][0][0], reverse=True)
-    check_box = bbox[:4] + bbox[-4:]
-    invalid_box = []
-    for box in check_box:
-        text = box["transcription"]
-        point = box["points"]
-        if len(text) <= 4 and point[0][0] < 30:
-            invalid_box.append(box)
-            continue
-        if len(text) <= 4:
-            invalid_box.append(box)
-            continue
-        if len(text) == 1:
-            invalid_box.append(box)
-            continue
+def remove_edge_box(bboxes, edge_count=4, x_thresh=10, short_len=4):
+    """
+    Loại bỏ các bounding box có khả năng nhiễu nằm ở viền ngoài ảnh.
 
-    for box in invalid_box:
-        if box in bbox:
-            bbox.remove(box)
-    return bbox
+    Điều kiện bị loại bỏ:
+        - Nằm trong top/bottom `edge_count` box (theo x)
+        - Có chiều dài text ≤ short_len
+        - Hoặc là ký tự đơn
+        - Và/hoặc nằm quá gần lề trái (x < x_thresh)
+
+    Args:
+        bboxes (list): Danh sách các box có "points" và "transcription".
+        edge_count (int): Số lượng box ngoài cùng để kiểm tra.
+        x_thresh (int): Ngưỡng x bên trái để coi là "sát lề".
+        short_len (int): Độ dài text được coi là ngắn/rác.
+
+    Returns:
+        list: Các box đã được lọc bỏ nhiễu.
+    """
+    if not bboxes:
+        return []
+
+    sorted_boxes = sorted(bboxes, key=lambda x: x["points"][0][0], reverse=True)
+    edge_boxes = sorted_boxes[:edge_count] + sorted_boxes[-edge_count:]
+
+    invalid_ids = set(id(box) for box in edge_boxes if (
+        len(box.get("transcription", "")) <= short_len or
+        len(box.get("transcription", "")) == 1 or
+        box["points"][0][0] < x_thresh
+    ))
+
+    # Trả lại các box hợp lệ
+    return [box for box in bboxes if id(box) not in invalid_ids]
+
 
 
 
@@ -66,7 +79,7 @@ def read_json(file_name):
 def process_nom(file_path):
     data = read_json(file_path)
 
-    bbox_data = remove_edge_box(data)  # dùng phiên bản đã chỉnh
+    bbox_data = data  # dùng phiên bản đã chỉnh
     cols = to_cols(bbox_data)
 
     nom_dict = {

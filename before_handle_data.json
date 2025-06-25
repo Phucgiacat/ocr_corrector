@@ -1,7 +1,7 @@
 {
     "file_name": "HKV",
-    "ocr_txt_qn": "D:\\learning\\lab NLP\\Tool_news\\books\\SachTruyenCacThanh_data\\ocr\\Quoc Ngu ocr",
-    "ocr_json_nom": "D:\\learning\\lab NLP\\Tool_news\\books\\SachTruyenCacThanh_data\\ocr\\Han Nom ocr",
-    "output_txt": "D:\\learning\\lab NLP\\Tool_news\\books\\SachTruyenCacThanh_data/result.txt",
-    "Result": "D:\\learning\\lab NLP\\Tool_news\\books\\SachTruyenCacThanh_data/result.xlsx"
+    "ocr_txt_qn": "D:\\learning\\lab NLP\\Tool_news\\books\\TuNguyenYeuLy_data\\ocr\\Quoc Ngu ocr",
+    "ocr_json_nom": "D:\\learning\\lab NLP\\Tool_news\\books\\TuNguyenYeuLy_data\\ocr\\Han Nom ocr",
+    "output_txt": "D:\\learning\\lab NLP\\Tool_news\\books\\TuNguyenYeuLy_data/result.txt",
+    "Result": "D:\\learning\\lab NLP\\Tool_news\\books\\TuNguyenYeuLy_data/result.xlsx"
 }
