@@ -477,8 +477,8 @@ def marking(df: pd.DataFrame, output_path: str, debug=False, type_qn=2):
 
         worksheet.write(row_num + 1, 1, df['ID'].iloc[row_num])
         worksheet.write(row_num + 1, 2, df['Image Box'].iloc[row_num])
-        safe_write_rich_string(worksheet, row_num + 1, 3, temp)
-        safe_write_rich_string(worksheet, row_num + 1, 4, _tem_3)
+        safe_write_rich_string(worksheet, row_num + 1, 3, _tem_3)
+        safe_write_rich_string(worksheet, row_num + 1, 4, temp)
 
         if type_qn == 0:
             worksheet.write(row_num + 1, 5, df['Chữ Quốc ngữ'].iloc[row_num])
