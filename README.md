@@ -77,8 +77,11 @@ python ocr_corrector.py --ocr true true
 Then, perform sentence alignment:
 Pass a single argument k which helps find the best matching lines (recommended: k=5).
 ```
-python ocr_corrector.py --align 5
+python ocr_corrector.py --align k
 ```
+For `k`, there are two types:
+- 1: for vertical OCR.
+- 2: for horizontal OCR.
 Finally, apply correction and color marking:\
 It is recommended to run the code as below.
 ```
