@@ -44,7 +44,7 @@ class DownloadImageRes:
 
 @dataclass
 class OCRReq:
-    ocr_id: 4
+    ocr_id: 1
     file_name: str
 
 @dataclass
