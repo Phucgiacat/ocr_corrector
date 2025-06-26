@@ -76,29 +76,25 @@ def levenshtein_align_boxes(nom_list, qn_list, similar_df, trans_df):
 def align(nom_dir, vi_dir, output_txt, k=2, name_book="book"):
     similar = pd.read_excel(os.environ['NOM_SIMILARITY_DICTIONARY'])
     trans = pd.read_excel(os.environ['QN2NOM_DICTIONARY']).iloc[:, [0, 1]]
-
-    start_nom_index = 1
-    list_file = sorted(os.listdir(nom_dir), key=lambda x: int(os.path.splitext(x)[0].split("_")[-1]))
-
+    print(k)
+    # list_file = sorted(os.listdir(nom_dir), key=lambda x: int(os.path.splitext(x)[0].split("_")[-1]))
+    list_file = os.listdir(nom_dir)
     for file_name in tqdm(list_file, desc="Processing files", unit="file"):
-        inx = int(os.path.splitext(file_name)[0].split("_")[-1])
-        if inx < start_nom_index:
-            continue
 
         try:
-            nom_data = process_nom(os.path.join(nom_dir, file_name))
-            quoc_ngu_list = process_quoc_ngu(os.path.join(vi_dir, file_name.replace("json", "txt")))
+            nom_data = process_nom(os.path.join(nom_dir, file_name), k)
+            quoc_ngu_list = process_quoc_ngu(os.path.join(vi_dir, file_name.replace("json", "txt")), k)
         except Exception as e:
             print(f"❌ Lỗi khi đọc file {file_name}: {e}")
             continue
 
+        segments = []
+
+        # if k == 1:
         num_word_hn = [len(sentence) for sentence in nom_data['text']]
         flatten_nom = list("".join(nom_data['text']))
         aligned_hn, aligned_qn = levenshtein_align_boxes(flatten_nom, quoc_ngu_list, similar, trans)
-
-        segments = []
         hn_remain, qn_remain = aligned_hn.copy(), aligned_qn.copy()
-
         for num in num_word_hn:
             count, i = 0, 0
             while i < len(hn_remain):
@@ -120,6 +116,10 @@ def align(nom_dir, vi_dir, output_txt, k=2, name_book="book"):
                 segments[-1] = (last_han + hn_remain, last_qn + qn_remain)
             else:
                 segments.append((hn_remain, qn_remain))
+        # elif k == 4:
+        #     for hn, qn in zip(nom_data['text'], quoc_ngu_list):
+        #         aligned_hn, aligned_qn = levenshtein_align_boxes(hn, qn, similar, trans)
+        #         segments.append((aligned_hn, aligned_qn))
 
         with open(output_txt, "a", encoding="utf-8") as f:
             if len(nom_data['bbox']) != len(segments):

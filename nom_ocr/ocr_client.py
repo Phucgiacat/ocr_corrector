@@ -78,7 +78,7 @@ class OCR:
             "Content-Type": "application/json; charset=utf-8"
         }
         body = {
-            "ocr_id": req.ocr_id,
+            "ocr_id": 4,
             "file_name": req.file_name
         }
 

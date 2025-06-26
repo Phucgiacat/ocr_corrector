@@ -98,9 +98,14 @@ def clean_text(text):
                 new_line += word + ' '
     return re.sub(r'\s+', ' ', new_line).strip()
 
-def process_quoc_ngu(path):
+def process_quoc_ngu(path, k):
     with open(path, 'r', encoding='utf-8') as f:
-        text = f.read()
-        text_clearn = clean_text(text)
-        data = text_clearn.split()        
+        data = []
+        if k == 1:
+            text = f.read()
+            text_clearn = clean_text(text)
+            data = text_clearn.split()     
+        elif k  == 4:
+            lines = f.readlines()
+            data = [clean_text(line).split() for line in lines]
     return data

@@ -10,8 +10,9 @@ import os
 
 def  nom_ocr(nom_dir, output_json_dir, output_image_dir, start=0):
     nom_logger = Logger('NOMOCR', stdout='DEBUG', file='DEBUG', file_name="nom_ocr/logs/main.log")
-    count = 1
+    count = 0
     for file in tqdm(os.listdir(nom_dir) , desc="Processing ocr images: "):
+        count += 1
         if count < start:
             continue
         time.sleep(1)
@@ -48,7 +49,7 @@ def  nom_ocr(nom_dir, output_json_dir, output_image_dir, start=0):
             break
 
         # nom_logger.info(f"Count: {idx}- OCR: {image_path} - {output_json_path} - {output_image_path}")
-        count += 1
+        
         
 # if __name__ == "__main__":
 #     nom_dir = "data/nom/image_proccess"

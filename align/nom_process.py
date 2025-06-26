@@ -51,7 +51,10 @@ def remove_edge_box(bboxes, edge_count=4, x_thresh=10, short_len=4):
 
 
 
-def to_cols(bbox):
+def to_cols(bbox, k):
+    if k == 4:
+        return  sorted(bbox, key=lambda x: x["points"][0][1])
+    
     bbox = sorted(bbox, key=lambda x: x["points"][0][0], reverse=True)
     cols = []
     for box in bbox:
@@ -76,20 +79,24 @@ def read_json(file_name):
 
     return data['data']['details']['details']
 
-def process_nom(file_path):
+def process_nom(file_path, k):
     data = read_json(file_path)
 
     bbox_data = data  # dùng phiên bản đã chỉnh
-    cols = to_cols(bbox_data)
+    cols = to_cols(bbox_data, k)
 
     nom_dict = {
         "text": [],
         "bbox": []
     }
-
-    for col in cols:
-        for box in col:
+    if k == 4:
+        for box in cols:
             nom_dict['text'].append(box["transcription"])
-            nom_dict['bbox'].append(box["points"])
+            nom_dict['bbox'].append(box["points"]) 
+    elif k == 1:
+        for col in cols:
+            for box in col:
+                nom_dict['text'].append(box["transcription"])
+                nom_dict['bbox'].append(box["points"])
 
     return nom_dict
