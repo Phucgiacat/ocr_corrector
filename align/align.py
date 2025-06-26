@@ -76,14 +76,13 @@ def levenshtein_align_boxes(nom_list, qn_list, similar_df, trans_df):
 def align(nom_dir, vi_dir, output_txt, k=2, name_book="book"):
     similar = pd.read_excel(os.environ['NOM_SIMILARITY_DICTIONARY'])
     trans = pd.read_excel(os.environ['QN2NOM_DICTIONARY']).iloc[:, [0, 1]]
-    print(k)
     # list_file = sorted(os.listdir(nom_dir), key=lambda x: int(os.path.splitext(x)[0].split("_")[-1]))
     list_file = os.listdir(nom_dir)
     for file_name in tqdm(list_file, desc="Processing files", unit="file"):
 
         try:
             nom_data = process_nom(os.path.join(nom_dir, file_name), k)
-            quoc_ngu_list = process_quoc_ngu(os.path.join(vi_dir, file_name.replace("json", "txt")), k)
+            quoc_ngu_list = process_quoc_ngu(os.path.join(vi_dir, file_name.replace("json", "txt")))
         except Exception as e:
             print(f"❌ Lỗi khi đọc file {file_name}: {e}")
             continue
