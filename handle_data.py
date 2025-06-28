@@ -207,7 +207,7 @@ if __name__ == "__main__":
                 output_path_nom = os.path.join(info['nom_dir'], list_image_nom[i])
                 name_image = list_image_vi[i].replace("_vi_", "_")
                 new_name_vi = os.path.join(info['vi_dir'], name_image) #<- đổi tại đây để đánh số.
-                new_name_nom = os.path.join(info['nom_dir'], name_image) #<- Đổi tại đây để đánh số.
+                new_name_nom = os.path.join(info['nom_dir'], name_image.replace(".txt",".jpg")) #<- Đổi tại đây để đánh số.
                 os.rename(output_path_nom, new_name_nom)  
                 os.rename(output_path_vi, new_name_vi)
                 

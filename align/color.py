@@ -289,7 +289,7 @@ def convert_txt_to_ecel(file_path: str, output_path: str , debug=False,namebook=
             file_name_path = f"{namebook}_page{page_path}.jpg"
         file_name = f"{namebook}_{page_path}_{page}.jpg"
 
-        id_name = f"{namebook}." + page_path + "." + "{:03d}".format(count_box)
+        id_name = f"{namebook}." + page_path + "." + "{:02d}".format(count_box)
         
         count_box += 1
 
