@@ -5,9 +5,11 @@ from .dtype_client import UploadImageReq, UploadImageRes, OCRReq , OCRRes
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 import json
+from pathlib import Path
 from tenacity import retry, stop_after_attempt, wait_fixed
 from dotenv import load_dotenv
-load_dotenv(".env")
+load_dotenv(dotenv_path=Path(__file__).parent.parent / ".env", override=True)
+
 
 
 class OCR:
@@ -78,7 +80,7 @@ class OCR:
             "Content-Type": "application/json; charset=utf-8"
         }
         body = {
-            "ocr_id": req.ocr_id,
+            "ocr_id": os.environ["TYPE_OCR"],
             "file_name": req.file_name
         }
 

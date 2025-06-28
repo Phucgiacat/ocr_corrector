@@ -52,7 +52,7 @@ if __name__ == "__main__":
         if (ocr_txt_qn is None) or (ocr_json_nom is None):
             raise ValueError("chưa ocr !!!")
         info['output_txt'] = f"{os.environ['OUTPUT_FOLDER']}/result.txt"
-        align(ocr_json_nom, ocr_txt_qn, info['output_txt'], int(algin), name_book=info['file_name'])
+        align(ocr_json_nom, ocr_txt_qn, info['output_txt'], os.environ["TYPE_OCR"], name_book=info['file_name'])
         write_file_info(info)
     
     if correct is not None:
