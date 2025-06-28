@@ -53,7 +53,7 @@ def replace_number_in_filename(filename: str, number: int, type = " ") -> str:
     Nếu cropped=True: thay thế số cũ (định dạng _xxx.) bằng số mới.
     Nếu cropped=False: thêm _xxx vào ngay trước phần đuôi file.
     """
-    padding = f"{number:03d}"
+    padding = f"{number:02d}"
 
     pattern = r'_(\d+)\.'
     new_filename = re.sub(pattern, f'_{type}_{padding}.', filename)
