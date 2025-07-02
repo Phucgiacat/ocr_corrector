@@ -283,13 +283,13 @@ def convert_txt_to_ecel(file_path: str, output_path: str , debug=False,namebook=
             last_name = file_name
             count_box = 1
             count_page += 1
-        page = "{:03d}".format(count_page)
+        page = "{:02d}".format(count_page)
         page_path = os.path.splitext(os.path.basename(file_name))[0].split("_")[1]
         if debug:
             file_name_path = f"{namebook}_page{page_path}.jpg"
         file_name = f"{namebook}_{page_path}_{page}.jpg"
 
-        id_name = f"{namebook}." + page_path + "." + "{:02d}".format(count_box)
+        id_name = f"{namebook}_" + page_path + "_" + "{:02d}".format(count_box)
         
         count_box += 1
 
