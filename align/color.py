@@ -333,8 +333,8 @@ def compare(quoc_ngu: str, ocr: str):
 
     # Tìm chữ Nôm trong danh sách quốc ngữ:
     find_wword = quocngu_dict[quocngu_dict['SinoNom'] == ocr]
-    if find_wword.empty:
-        # Nếu không tìm thấy ký tự OCR trong danh sách chữ Nôm, trả về ký tự OCR
+    if find_wword.empty == False:
+        # Nếu tìm thấy ký tự OCR trong danh sách chữ Nôm, trả về ký tự OCR
         return [ocr]
     
     if row.empty:
