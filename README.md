@@ -81,7 +81,7 @@ python ocr_corrector.py --align k
 ```
 For `k`, there are two types:
 - 1: for vertical OCR.
-- 2: for horizontal OCR.
+- 4: for horizontal OCR.
 Finally, apply correction and color marking:\
 It is recommended to run the code as below.
 ```
