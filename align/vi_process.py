@@ -73,9 +73,11 @@ def clean_text(text):
     Removing non-latin chars
     But keeping numbers and punctuations as default
     """
+    text = text.replace('\n', ' ')
     text = re.sub(r'-\s*\d+\s*-', '', text)  # Remove "- digits -"
     text = re.sub(r'\(\s*\d+\s*\)', '', text)  # Remove "( digits )"
     text = re.sub(r"\(.*?\)", '', text) # Remove "( content )"
+    text = re.sub(r'\b\d+\b', '', text) # Remove standalone numbers
     text = re.sub(r'[^a-zA-Z0-9\u00C0-\u1EF9\s\n]+', ' ', text)
      # Replace multiple consecutive spaces with a single space
     text = re.sub(r'\s+', ' ', text).strip()

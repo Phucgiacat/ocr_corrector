@@ -1,0 +1,10 @@
+{
+    "file_name": "HVK_001_000",
+    "nom_dir": "D:\\learning\\lab NLP\\WeekOCR\\anhphat\\image\\Han Nom",
+    "vi_dir": "D:\\learning\\lab NLP\\WeekOCR\\anhphat\\image\\Quoc Ngu",
+    "ocr_txt_qn": "D:\\learning\\lab NLP\\WeekOCR\\anhphat\\ocr\\Quoc Ngu ocr",
+    "ocr_json_nom": "D:\\learning\\lab NLP\\WeekOCR\\anhphat\\ocr\\Han Nom ocr",
+    "output_txt": "D:\\learning\\lab NLP\\WeekOCR\\anhphat/result.txt",
+    "Result": "D:\\learning\\lab NLP\\WeekOCR\\anhphat/result.xlsx",
+    "ocr_image_nom": "D:\\learning\\lab NLP\\WeekOCR\\anhphat\\ocr\\image bbox"
+}

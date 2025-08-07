@@ -41,7 +41,7 @@ if __name__ == "__main__":
             info['ocr_json_nom'] = f"{os.environ['OUTPUT_FOLDER']}/ocr/Han_Nom_ocr"
             info['ocr_image_nom'] = f"{os.environ['OUTPUT_FOLDER']}/ocr/image_bbox"
             output_resize_path = f"{os.environ['OUTPUT_FOLDER']}/image/resized_images.txt"
-            process_images_in_directory(info['nom_dir'], output_resize_path)
+            # process_images_in_directory(info['nom_dir'], output_resize_path)
             nom_ocr(info['nom_dir'], info['ocr_json_nom'], info['ocr_image_nom'])    
         write_file_info(info)
     

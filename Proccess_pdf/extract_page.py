@@ -118,7 +118,13 @@ class ExtractPages:
                     page_names.append(image_new)
 
             except Exception as e:
-                print(f"⚠️ Could not process page {page_num + 1}: {e}")
+                # Không có text → render ảnh bằng fitz để OCR
+                page = doc.load_page(page_num)
+                zoom = dpi / 72
+                mat = fitz.Matrix(zoom, zoom)
+                pix = page.get_pixmap(matrix=mat)
+                image_path = os.path.join(self.output_folder, f"{_page_id}.jpg")
+                pix.save(image_path)
 
             if logs and (page_num + 1) % 50 == 0:
                 print(f"Page {page_num + 1} processed.")

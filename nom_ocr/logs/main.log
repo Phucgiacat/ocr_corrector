@@ -1,2 +1,38 @@
 2025-06-26 03:36:47,294 - NOMOCR - ERROR - Error: D:\learning\lab NLP\Week03\ATRI\ThanhHoaQuanPhong\image_processed\Han_Nom\page062.jpg - Upload: t_access_denied
 2025-06-26 09:32:01,684 - NOMOCR - ERROR - Error: D:\learning\lab NLP\Week03\SachDNQSDC\DNQSDC\image_label\DNQSDC_022.jpg - Upload: t_access_denied
+2025-07-05 20:49:00,814 - NOMOCR - ERROR - Error: D:\learning\lab NLP\WeekOCR\selected_bia\image\Han_Nom\T09_08456.png - Upload: Failed to upload image: Invalid Firebase token - could not extract UID
+2025-07-05 20:49:17,956 - NOMOCR - ERROR - Error: D:\learning\lab NLP\WeekOCR\selected_bia\image\Han_Nom\T09_08456.png - Upload: Failed to upload image: Invalid Firebase token - could not extract UID
+2025-07-09 11:17:29,582 - NOMOCR - ERROR - Error: D:\learning\lab NLP\WeekOCR\selected_bia\image\Han_Nom\T09_08456.png - Upload: Failed to upload image: Missing or invalid Bearer token
+2025-07-09 12:16:29,256 - NOMOCR - ERROR - Error: D:\learning\lab NLP\WeekOCR\selected_bia\image\Han_Nom\T09_08456.png - Upload: Failed to upload image: Invalid Firebase token - could not extract UID
+2025-07-09 12:30:35,506 - NOMOCR - ERROR - Error: D:\learning\lab NLP\WeekOCR\selected_bia\image\Han_Nom\T09_08456.png - Upload: Failed to upload image: Missing or invalid Bearer token
+2025-07-09 12:49:11,727 - NOMOCR - ERROR - Error: D:\learning\lab NLP\WeekOCR\selected_bia\image\Han_Nom\T09_08456.png - Upload: Đăng nhập Firebase thất bại: {
+  "error": {
+    "code": 400,
+    "message": "CONFIGURATION_NOT_FOUND",
+    "errors": [
+      {
+        "message": "CONFIGURATION_NOT_FOUND",
+        "domain": "global",
+        "reason": "invalid"
+      }
+    ]
+  }
+}
+
+2025-07-09 12:51:18,245 - NOMOCR - ERROR - Error: D:\learning\lab NLP\WeekOCR\selected_bia\image\Han_Nom\T09_08456.png - Upload: Đăng nhập Firebase thất bại: {
+  "error": {
+    "code": 400,
+    "message": "INVALID_LOGIN_CREDENTIALS",
+    "errors": [
+      {
+        "message": "INVALID_LOGIN_CREDENTIALS",
+        "domain": "global",
+        "reason": "invalid"
+      }
+    ]
+  }
+}
+
+2025-07-09 13:05:07,357 - NOMOCR - ERROR - Error: D:\learning\lab NLP\WeekOCR\selected_bia\image\Han_Nom\T09_08721.png - OCR: {"title": "t_000500", "text": "m_000500", "web_text": null, "debug_msg": "Internal Server Error"}
+2025-07-09 13:27:49,062 - NOMOCR - ERROR - Error: D:\learning\lab NLP\WeekOCR\selected_bia\image\Han_Nom\T09_08721.png - OCR: {"title": "t_000500", "text": "m_000500", "web_text": null, "debug_msg": "Internal Server Error"}
+2025-07-09 13:31:35,137 - NOMOCR - ERROR - Error: D:\learning\lab NLP\WeekOCR\selected_bia\image\Han_Nom\T09_08721.png - OCR: {"title": "t_000500", "text": "m_000500", "web_text": null, "debug_msg": "Internal Server Error"}

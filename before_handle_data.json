@@ -1,10 +1,10 @@
 {
-    "file_name": "HVK_001_000",
-    "nom_dir": "D:\\learning\\lab NLP\\Week03\\SachDNQSDC\\DNQSDC\\image_processed\\Han_Nom",
-    "vi_dir": "D:\\learning\\lab NLP\\Week03\\SachDNQSDC\\DNQSDC\\image_processed\\Quoc_Ngu",
-    "ocr_txt_qn": "D:\\learning\\lab NLP\\Week03\\SachDNQSDC\\DNQSDC\\ocr\\Quoc_Ngu_ocr",
-    "ocr_json_nom": "D:\\learning\\lab NLP\\Week03\\SachDNQSDC\\DNQSDC/ocr/Han_Nom_ocr",
-    "output_txt": "D:\\learning\\lab NLP\\Week03\\SachDNQSDC\\DNQSDC/result.txt",
-    "Result": "D:\\learning\\lab NLP\\Week03\\SachDNQSDC\\DNQSDC/result.xlsx",
-    "ocr_image_nom": "D:\\learning\\lab NLP\\Week03\\SachDNQSDC\\DNQSDC/ocr/image_bbox"
+    "file_name": "RCM_001_000",
+    "vi_dir": "D:\\learning\\lab NLP\\Tool_news\\books\\RCM_001_000/image_processed/Quoc Ngu",
+    "nom_dir": "D:\\learning\\lab NLP\\Tool_news\\books\\RCM_001_000/image_processed/Han Nom",
+    "ocr_json_nom": "D:\\learning\\lab NLP\\Tool_news\\books\\RCM_001_000/ocr/Han_Nom_ocr",
+    "ocr_image_nom": "D:\\learning\\lab NLP\\Tool_news\\books\\RCM_001_000/ocr/image_bbox",
+    "ocr_txt_qn": "D:\\learning\\lab NLP\\Tool_news\\books\\RCM_001_000/ocr/Quoc_Ngu_ocr",
+    "output_txt": "D:\\learning\\lab NLP\\Tool_news\\books\\RCM_001_000/result.txt",
+    "Result": "D:\\learning\\lab NLP\\Tool_news\\books\\RCM_001_000/result.xlsx"
 }

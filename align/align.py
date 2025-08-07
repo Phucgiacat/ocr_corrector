@@ -62,10 +62,10 @@ def levenshtein_align_boxes(nom_list, qn_list, similar_df, trans_df):
             j -= 1
         elif i > 0 and backtrace[i][j] == 'U':
             aligned_nom.append(nom_list[i - 1])
-            aligned_qn.append("_")
+            aligned_qn.append("*")
             i -= 1
         elif j > 0 and backtrace[i][j] == 'L':
-            aligned_nom.append("_")
+            aligned_nom.append("*")
             aligned_qn.append(qn_list[j - 1])
             j -= 1
 
@@ -77,6 +77,31 @@ def align(nom_dir, vi_dir, output_txt, k=2, name_book="book"):
     similar = pd.read_excel(os.environ['NOM_SIMILARITY_DICTIONARY'])
     trans = pd.read_excel(os.environ['QN2NOM_DICTIONARY']).iloc[:, [0, 1]]
     list_file = sorted(os.listdir(nom_dir), key=lambda x: int(os.path.splitext(x)[0].split("_")[-1]))
+
+    # # Chạy với 1 file duy nhất
+    # file = "D:\\learning\\lab NLP\\WeekOCR\\test\\new.txt"
+    # if file:
+    #     with open(file, "r", encoding="utf-8") as f:
+    #         list_file = [line.strip() for line in f.readlines()]
+    #     if not list_file:
+    #         print("❌ Không có file nào trong danh sách.")
+    #         return
+    #     for idx, line in tqdm(enumerate(list_file)):
+    #         split = line.split("\t")
+    #         flatten_nom = list(split[0].strip())
+    #         quoc_ngu_list = split[1].strip().split(" ")
+    #         aligned_hn, aligned_qn = levenshtein_align_boxes(flatten_nom, quoc_ngu_list, similar, trans)
+    #         with open(output_txt, "a", encoding="utf-8") as f:
+    #             if len(aligned_hn) != len(aligned_qn):
+    #                 print(f"⚠️ Warning: Mismatch độ dài align tại file {file}. Hán={len(aligned_hn)}, Việt={len(aligned_qn)}")
+    #                 continue
+    #             nom = ''.join(aligned_hn).strip()
+    #             qn = ' '.join(aligned_qn).strip()
+
+    #             if not nom and not qn:
+    #                 continue
+    #             f.write(f"{name_book}_{str(idx + 1).zfill(4)}.json\t[]\t{nom}\t{qn}\n")
+    # return
     for file_name in tqdm(list_file, desc="Processing files", unit="file"):
 
         try:
@@ -96,7 +121,7 @@ def align(nom_dir, vi_dir, output_txt, k=2, name_book="book"):
         for num in num_word_hn:
             count, i = 0, 0
             while i < len(hn_remain):
-                if hn_remain[i] != "_":
+                if hn_remain[i] != "*":
                     count += 1
                 i += 1
                 if count == num:

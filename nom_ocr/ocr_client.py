@@ -10,7 +10,8 @@ from tenacity import retry, stop_after_attempt, wait_fixed
 from dotenv import load_dotenv
 load_dotenv(dotenv_path=Path(__file__).parent.parent / ".env", override=True)
 
-
+def get_firebase_token():
+    return "eyJhbGciOiJSUzI1NiIsImtpZCI6IjQ3YWU0OWM0YzlkM2ViODVhNTI1NDA3MmMzMGQyZThlNzY2MWVmZTEiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vY2xjLWhhbS1ub24iLCJhdWQiOiJjbGMtaGFtLW5vbiIsImF1dGhfdGltZSI6MTc1MjA0MDU4NCwidXNlcl9pZCI6InRrS3JOcmVFVVBjNDJLMVBoZVloeDU4THR2cjEiLCJzdWIiOiJ0a0tyTnJlRVVQYzQySzFQaGVZaHg1OEx0dnIxIiwiaWF0IjoxNzUyMDQwNTg0LCJleHAiOjE3NTIwNDQxODQsImVtYWlsIjoiZGV0YWlAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7ImVtYWlsIjpbImRldGFpQGdtYWlsLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.L1w9bt5qh8Hm6BMC091bw6GiswtaMYlE3XgE_euN4c-HNHaq5Pfk6HwU8ggTVuxJCmQg1tRdaQm3NGovjPHucDzB2VWwKCgW05lUz7622-bY-FzOt0TB11Abhe2ldzBDy5LIgVcafZ7AsIwUrOQbVPScqSyhcgaFEvaQ4W24kCOfis2qiLwiXuiHvVLvJEgZQvzDcGCoxZe37bu05D1QOV0-qG_JKJhaXdSbVjBtOCakZCTJ0W9ax_XBzgqywsfHOB-4qqm4YKVuxLLl0UQCa9627rvNfdumE-YZcuNLCySWO_KRD8E3TuM38h6cMNuoqgX-eQDvO2qbKJTNZl08bg; path=/refresh_token=AMf-vBzXpDU7RyzZ_RJquw4989qQTYdbAMLMJ2c74nqs-ARe2x2b2DSV6RH1Ev_yOHrEQtDlb2Ul7109ATq9IVKgOW2VMphCYFFRN7gk6ylkYh88Hy5W3j4_-gggWqSb38JMsCe2s-Hbk1kBb2S_8siFSS6T7Yt2bUSWQEzVhjWQ0wYeTR76Wi2eqUl3KtayIoq_a-c9jNSd"
 
 class OCR:
     def __init__(self):
@@ -27,7 +28,7 @@ class OCR:
         # agent postman
         headers = {
             "User-Agent": agent,  
-            "Authorization": "Bearer 123"
+            "Authorization": f"Bearer {get_firebase_token()}",
         }
 
         with open(req.image, "rb") as f:
@@ -50,7 +51,7 @@ class OCR:
 
         headers = {
             "User-Agent": agent,  
-            "Authorization": "Bearer 123",
+            "Authorization": f"Bearer {get_firebase_token()}",
             "Content-Type": "application/json; charset=utf-8"
         }
 
@@ -76,7 +77,7 @@ class OCR:
         url = f"{self.base_url}api/web/clc-sinonom/image-ocr"
         headers = {
             "User-Agent": agent,  # Random User-Agent
-            "Authorization": "Bearer 123",
+            "Authorization": f"Bearer {get_firebase_token()}",
             "Content-Type": "application/json; charset=utf-8"
         }
         body = {
