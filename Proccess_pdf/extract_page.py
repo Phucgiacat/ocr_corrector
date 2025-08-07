@@ -125,6 +125,18 @@ class ExtractPages:
                 pix = page.get_pixmap(matrix=mat)
                 image_path = os.path.join(self.output_folder, f"{_page_id}.jpg")
                 pix.save(image_path)
+                
+                # OCR
+                page_content = self.extract_page_content(image_path)
+                if page_content:
+                    detected_lang = langdetect.detect(page_content)
+                    save_folder = self.quoc_ngu if detected_lang == "vi" else self.nom_path
+                else:
+                    save_folder = self.nom_path
+
+                image_new = os.path.join(save_folder, f"{_page_id}.jpg")
+                shutil.move(image_path, image_new)
+                page_names.append(image_new)
 
             if logs and (page_num + 1) % 50 == 0:
                 print(f"Page {page_num + 1} processed.")
