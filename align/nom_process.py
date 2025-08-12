@@ -74,29 +74,36 @@ def to_cols(bbox, k):
 
 
 def read_json(file_name):
-    with open(file=file_name, mode='r', encoding='utf-8') as file:
-        data = json.load(file)
+    # with open(file=file_name, mode='r', encoding='utf-8') as file:
+    #     data = json.load(file)
 
-    return data['data']['details']['details']
+    # return data['data']['details']['details']
+    with open(file_name, mode='r', encoding='utf-8') as file:
+        data = file.read()
+    return {
+        "text": [data],
+        "bbox": [[0, 0, 0, 0]]
+    }
 
 def process_nom(file_path, k):
     data = read_json(file_path)
 
     bbox_data = data  # dùng phiên bản đã chỉnh
-    cols = to_cols(bbox_data, k)
+    # cols = to_cols(bbox_data, k)
 
-    nom_dict = {
-        "text": [],
-        "bbox": []
-    }
-    if k == 4:
-        for box in cols:
-            nom_dict['text'].append(box["transcription"])
-            nom_dict['bbox'].append(box["points"]) 
-    elif k == 1:
-        for col in cols:
-            for box in col:
-                nom_dict['text'].append(box["transcription"])
-                nom_dict['bbox'].append(box["points"])
+    # nom_dict = {
+    #     "text": [],
+    #     "bbox": []
+    # }
+    # if k == 4:
+    #     for box in cols:
+    #         nom_dict['text'].append(box["transcription"])
+    #         nom_dict['bbox'].append(box["points"]) 
+    # elif k == 1:
+    #     for col in cols:
+    #         for box in col:
+    #             nom_dict['text'].append(box["transcription"])
+    #             nom_dict['bbox'].append(box["points"])
 
-    return nom_dict
+    # return nom_dict
+    return  data

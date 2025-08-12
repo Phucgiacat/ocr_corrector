@@ -76,7 +76,7 @@ def levenshtein_align_boxes(nom_list, qn_list, similar_df, trans_df):
 def align(nom_dir, vi_dir, output_txt, k=2, name_book="book"):
     similar = pd.read_excel(os.environ['NOM_SIMILARITY_DICTIONARY'])
     trans = pd.read_excel(os.environ['QN2NOM_DICTIONARY']).iloc[:, [0, 1]]
-    list_file = sorted(os.listdir(nom_dir), key=lambda x: int(os.path.splitext(x)[0].split("_")[-1]))
+    list_file = sorted(os.listdir(nom_dir), key=lambda x: int(os.path.splitext(x)[0].split(".")[-2]))
 
     # # Chạy với 1 file duy nhất
     # file = "D:\\learning\\lab NLP\\WeekOCR\\test\\new.txt"
@@ -102,6 +102,7 @@ def align(nom_dir, vi_dir, output_txt, k=2, name_book="book"):
     #                 continue
     #             f.write(f"{name_book}_{str(idx + 1).zfill(4)}.json\t[]\t{nom}\t{qn}\n")
     # return
+
     for file_name in tqdm(list_file, desc="Processing files", unit="file"):
 
         try:

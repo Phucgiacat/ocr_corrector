@@ -81,8 +81,11 @@ class OCR:
             "Content-Type": "application/json; charset=utf-8"
         }
         body = {
-            "ocr_id": os.environ["TYPE_OCR"],
-            "file_name": req.file_name
+            "file_name": req.file_name,
+            "ocr_id":  os.environ["TYPE_OCR"],
+            "lang_type": os.environ["TYPE_LANG"],
+            "reading_direction": os.environ["TYPE_READING_DIRECTION"],
+            "font_type": os.environ["TYPE_FONT"]
         }
 
         try:
